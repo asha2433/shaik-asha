@@ -44,7 +44,7 @@ pipeline {
 
                         // Pull the Docker image from Docker Hub
 
-                        sh 'docker pull 6302650993/ashashaik_123:interface_up_down'
+                        sh 'docker push 6302650993/ashashaik_123:interface_up_down'
 
                     }
 
