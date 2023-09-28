@@ -1,0 +1,28 @@
+numbers = []
+words = []
+
+# Input numbers until 0 is given
+while True:
+    num_input = input("Enter a number (0 to stop): ")
+    if num_input == '0':
+        break
+    try:
+        num = int(num_input)
+        numbers.append(num)
+    except ValueError:
+        print("Invalid input. Please enter a valid number.")
+
+# Input words until END is given
+while True:
+    word_input = input("Enter a word (END to stop): ")
+    if word_input == 'END':
+        break
+    words.append(word_input)
+
+# Sort and print numbers in ascending and descending order
+print("Numbers in ascending order:", sorted(numbers))
+print("Numbers in descending order:", sorted(numbers, reverse=True))
+
+# Sort and print words in ascending and descending order
+print("Words in ascending order:", sorted(words))
+print("Words in descending order:", sorted(words, reverse=True))
