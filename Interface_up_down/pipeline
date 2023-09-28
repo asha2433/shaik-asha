@@ -18,7 +18,7 @@ pipeline {
 
                     sh 'ls'
 
-                    sh 'docker build -t Interface_up_down -f Dockerfile .'
+                    sh 'docker build -t interface_up_down -f Dockerfile .'
 
                 }
 
@@ -44,7 +44,7 @@ pipeline {
 
                         // Pull the Docker image from Docker Hub
 
-                        sh 'docker pull 6302650993/ashashaik_123:Interface_up_down'
+                        sh 'docker pull 6302650993/ashashaik_123:interface_up_down'
 
                     }
 
@@ -64,7 +64,7 @@ pipeline {
 
                     // Run a Docker container with the pulled image
 
-                    sh 'docker run -it Interaface-up-down 6302650993/ashashaik_123:Interface-up-down'
+                    sh 'docker run -it interaface-up-down 6302650993/ashashaik_123:interface-up-down'
 
                 }
 
