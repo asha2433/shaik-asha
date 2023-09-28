@@ -39,7 +39,7 @@ pipeline {
 
  
 
-                    sh 'docker build -t interface_up_down -f Dockerfile .'
+                    sh 'docker build -t sample-pyats -f Dockerfile .'
 
  
 
