@@ -41,7 +41,7 @@ pipeline {
                         sh "docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD"
 
  
-
+                        sh'docker tag interface_up_down 6302650993/ashashaik_123:interface_up_down'
                         // Pull the Docker image from Docker Hub
 
                         sh 'docker push 6302650993/ashashaik_123:interface_up_down'
