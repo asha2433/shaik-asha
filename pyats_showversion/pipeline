@@ -128,7 +128,7 @@ pipeline {
 
  
 
-                    sh 'sudo docker run -it pyats_showversion 6302650993/ashashaik_123:pyats_showversion'
+                    sh 'docker run -it pyats_showversion 6302650993/ashashaik_123:pyats_showversion'
 
  
 
