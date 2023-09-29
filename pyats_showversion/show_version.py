@@ -2,7 +2,7 @@ from pyats import aetest
 from pyats.topology import loader
 
 
-testbed = loader.load('my_yaml1.yaml')
+testbed = loader.load('my_yaml.yaml')
 
 class MyTestcase(aetest.Testcase):
 
