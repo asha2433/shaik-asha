@@ -10,7 +10,7 @@ WORKDIR /testwork
 
 # Copy the Python script to the container
 COPY show_version.py /testwork/
-COPY my_yaml1.yaml /testwork/
+COPY my_yaml.yaml /testwork/
 
 
 # Run the Python script when the container launches
