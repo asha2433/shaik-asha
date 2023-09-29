@@ -9,9 +9,9 @@ WORKDIR /testwork
 
 
 # Copy the Python script to the container
-COPY pyatssample.py /testwork/
+COPY pyats_showversion.py /testwork/
 COPY my_yaml1.yaml /testwork/
 
 
 # Run the Python script when the container launches
-ENTRYPOINT ["python", "/testwork/pyatssample.py"]
+ENTRYPOINT ["python", "/testwork/pyats_showversion.py"]
