@@ -1,0 +1,156 @@
+
+pipeline {
+
+ 
+
+    agent any
+
+ 
+
+    environment {
+
+ 
+
+        DOCKER_HUB_CREDENTIALS = credentials('docker-hub-credentials') // Jenkins credential ID for Docker Hub
+
+ 
+
+    }
+
+ 
+
+    stages {
+
+ 
+
+        stage('Build') {
+
+ 
+
+            steps {
+
+ 
+
+                dir('sample-pyats') {
+
+ 
+
+                    sh 'ls'
+
+ 
+
+                    sh 'docker build -t sample-pyats -f Dockerfile .'
+
+ 
+
+                }
+
+ 
+
+            }
+
+ 
+
+        }
+
+ 
+
+ 
+
+        stage('Pull from Docker Hub') {
+
+ 
+
+            steps {
+
+ 
+
+                script {
+
+ 
+
+                    // Log in to Docker Hub using credentials
+
+ 
+
+                    withCredentials([usernamePassword(credentialsId: 'docker-hub-credentials', usernameVariable: 'DOCKER_USERNAME', passwordVariable: 'DOCKER_PASSWORD')]) {
+
+ 
+
+                        sh "docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD"
+
+ 
+
+
+
+                        sh'docker tag sample-pyats 6302650993/ashashaik_123:sample-pyats'
+
+                        // Pull the Docker image from Docker Hub
+
+ 
+
+                        sh 'docker push 6302650993/ashashaik_123:sample-pyats'
+
+ 
+
+                    }
+
+ 
+
+                }
+
+ 
+
+            }
+
+ 
+
+        }
+
+ 
+
+ 
+
+        stage('Run Docker Container') {
+
+ 
+
+            steps {
+
+ 
+
+                script {
+
+ 
+
+                    // Run a Docker container with the pulled image
+
+ 
+
+                    sh 'docker run -it sample-pyats 6302650993/ashashaik_123:sample-pyats'
+
+ 
+
+                }
+
+ 
+
+            }
+
+ 
+
+        }
+
+ 
+
+ 
+
+        // Additional stages in your pipeline...
+
+ 
+
+    }
+
+ 
+
+}
