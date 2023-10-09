@@ -5,7 +5,7 @@ pipeline {
 
     environment {
 
-        EC2_HOST = '13.48.178.190
+        EC2_HOST = '13.48.178.190'
 
         EC2_USER = 'ubuntu'
 
