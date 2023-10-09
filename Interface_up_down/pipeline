@@ -1,16 +1,19 @@
+
 pipeline {
 
     agent any
 
     environment {
 
-        DOCKER_HUB_CREDENTIALS = credentials('docker-hub-credentials') // Jenkins credential ID for Docker Hub
+        EC2_HOST = '13.48.178.190
+
+        EC2_USER = 'ubuntu'
 
     }
 
     stages {
 
-        stage('Build') {
+        /*stage('Build') {
 
             steps {
 
@@ -18,7 +21,7 @@ pipeline {
 
                     sh 'ls'
 
-                    sh 'docker build -t interface_up_down -f Dockerfile .'
+                    sh 'docker build -t interface -f Dockerfile .'
 
                 }
 
@@ -28,23 +31,47 @@ pipeline {
 
  
 
-        stage('Pull from Docker Hub') {
+        stage('Push to Docker Hub') {
+
+            steps {
+
+                sh "docker login -u ashashaik1804@gmail.com -p 'Amzadali@2433>>'"
+
+                sh 'docker tag interface 6302650993/ashashaik_123:interface'
+
+                sh "docker push 6302650993/ashashaik_123:interface"
+
+            }
+
+        }*/
+
+ 
+
+        stage('Pull Docker Image on EC2') {
 
             steps {
 
                 script {
 
-                    // Log in to Docker Hub using credentials
+                    withCredentials([file(credentialsId: 'pemkey', variable: 'PRIVATE_KEY_FILE')]) {
 
-                    withCredentials([usernamePassword(credentialsId: 'docker-hub-credentials', usernameVariable: 'DOCKER_USERNAME', passwordVariable: 'DOCKER_PASSWORD')]) {
+                        sh """
 
-                        sh "docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD"
+                            chmod 400 \$PRIVATE_KEY_FILE
+
+                            ssh -i \$PRIVATE_KEY_FILE -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null \$EC2_USER@\$EC2_HOST<< EOF
+
+                            //ssh -i your-ssh-key.pem -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null ubuntu@your-ec2-host 'sudo docker pull your-image:tag'
 
  
-                        sh'docker tag interface_up_down 6302650993/ashashaik_123:interface_up_down'
-                        // Pull the Docker image from Docker Hub
 
-                        sh 'docker push 6302650993/ashashaik_123:interface_up_down'
+                            sudo docker login -u ashashaik1804@gmail.com -p 'Amzadali@2433>>'
+
+                            sudo docker pull 6302650993/ashashaik_123:interface
+
+                            sudo docker run -d -p 5000:5000 6302650993/ashashaik_123:interface
+
+                        """
 
                     }
 
@@ -53,28 +80,6 @@ pipeline {
             }
 
         }
-
- 
-
-        stage('Run Docker Container') {
-
-            steps {
-
-                script {
-
-                    // Run a Docker container with the pulled image
-
-                    sh 'docker run -it interaface-up-down 6302650993/ashashaik_123:interface-up-down'
-
-                }
-
-            }
-
-        }
-
- 
-
-        // Additional stages in your pipeline...
 
     }
 
