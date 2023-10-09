@@ -57,13 +57,9 @@ pipeline {
 
                         sh """
 
-                            chmod 400 \$PRIVATE_KEY_FILE
+                            chmod 400 $PRIVATE_KEY_FILE
 
-                            ssh -i \$PRIVATE_KEY_FILE -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null \$EC2_USER@\$EC2_HOST<< EOF
-
-                            //ssh -i your-ssh-key.Asha -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null ubuntu@your-ec2-host 'sudo docker pull your-image:tag'
-
- 
+                            ssh -i $PRIVATE_KEY_FILE -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null $EC2_USER@\$EC2_HOST<< EOF
 
                             sudo docker login -u ashashaik1804@gmail.com -p 'Amzadali@2433>>'
 
