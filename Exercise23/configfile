@@ -1,0 +1,8 @@
+{
+    "DATABASE_CONFIG": {
+        "user": "root",
+        "password": "bhuvana",
+        "host": "localhost",
+        "database": "flask"
+    }
+}
