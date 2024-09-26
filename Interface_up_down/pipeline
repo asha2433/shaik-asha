@@ -1,0 +1,82 @@
+
+pipeline {
+
+    agent any
+
+    environment {
+
+        EC2_HOST = '13.48.178.190'
+
+        EC2_USER = 'ubuntu'
+
+    }
+
+    stages {
+
+        /*stage('Build') {
+
+            steps {
+
+                dir('Interface_up_down') {
+
+                    sh 'ls'
+
+                    sh 'docker build -t interface -f Dockerfile .'
+
+                }
+
+            }
+
+        }
+
+ 
+
+        stage('Push to Docker Hub') {
+
+            steps {
+
+                sh "docker login -u ashashaik1804@gmail.com -p 'Amzadali@2433>>'"
+
+                sh 'docker tag interface 6302650993/ashashaik_123:interface'
+
+                sh "docker push 6302650993/ashashaik_123:interface"
+
+            }
+
+        }*/
+
+ 
+
+        stage('Pull Docker Image on EC2') {
+
+            steps {
+
+                script {
+
+                    withCredentials([file(credentialsId: 'Asha', variable: 'PRIVATE_KEY_FILE')]) {
+
+                        sh """
+
+                            chmod 400 $PRIVATE_KEY_FILE
+
+                            ssh -i $PRIVATE_KEY_FILE -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null $EC2_USER@\$EC2_HOST<< EOF
+
+                            sudo docker login -u ashashaik1804@gmail.com -p 'Amzadali@2433>>'
+
+                            sudo docker pull 6302650993/ashashaik_123:interface
+
+                            sudo docker run -d -p 5000:5000 6302650993/ashashaik_123:interface
+
+                        """
+
+                    }
+
+                }
+
+            }
+
+        }
+
+    }
+
+}
